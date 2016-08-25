@@ -1,0 +1,11 @@
+.CodeMirror pre.CodeMirror-placeholder {
+  color: #999;
+}
+.is-container-vertical-scrollable{
+  min-height: 500px;
+  max-height: 600px;
+  overflow-y: scroll;
+}
+.close-active{
+  color: #ed6c63;
+}

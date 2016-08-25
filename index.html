@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hello Arthur!</title>
+    <link rel="stylesheet" href="dist/css/app.css">
+  </head>
+
+  <body>
+    <div id="react-root"></div>
+    <script>
+    // need to do this because electron implement its own require
+    // it will overlapped with require function from babel-brunch
+      window.nodeRequire = require;
+      delete window.require;
+      delete window.exports;
+      delete window.module;
+    </script>
+
+    <script src="dist/js/app.js"></script>
+  </body>
+</html>

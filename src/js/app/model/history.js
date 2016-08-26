@@ -6,14 +6,23 @@ class HistoryCollection {
     this.limit  = 20;
   }
 
-  add(params={}, callback=(()=>{}) ){
-    this.conn.add(params).then(callback);
-
-    this.conn.count(function(total){
-      if(total > this.limit){
-        this.conn.last().destroy();
-      }
-    }.bind(this));
+  add(params={}, callback=()=>{} ){
+    var _conn = this.conn;
+    var _limit = this.limit
+    _conn.add(params)
+    .then((id) => {
+      _conn.count().then((total) =>{
+        if(total > _limit){
+          let totalNeedToDestroyed = total - _limit;
+          // @TODO cleaning up this
+          return _conn.orderBy(':id').limit(totalNeedToDestroyed).delete().then((totalDestroyed) => {
+              callback(id);
+            });
+        } else{
+          callback(id);
+        }
+      });
+    })
   }
 
   fetchAll(callback){

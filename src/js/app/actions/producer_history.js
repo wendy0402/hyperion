@@ -1,29 +1,26 @@
-import { INIT_HISTORY, ADD_HISTORY } from '../constants/action_types'
+import { UPDATE_HISTORIES } from '../constants/action_types'
 
 import { History } from '../model/history'
 
 export function initializeHistory(){
-  return (dispatch) => {
-    History.fetchAll((histories) => {
-      dispatch(_initHistory(histories))
-    });
-  }
+  return (dispatch) => { fetchAllHistories(dispatch) }
 }
 
 export function addHistory(params){
   return (dispatch) =>{
-    History.add(params, (id) => {
-      return dispatch({
-        type: ADD_HISTORY,
-        history: Object.assign({}, params, {id: id})
-      });
-    });
+    History.add(params, (id) => { fetchAllHistories(dispatch) });
   };
 }
 
-function _initHistory(histories){
+function fetchAllHistories(dispatch){
+  return History.fetchAll((histories) => {
+    dispatch(_updateHistory(histories))
+  });
+}
+
+function _updateHistory(histories){
   return {
-    type: INIT_HISTORY,
+    type: UPDATE_HISTORIES,
     histories: histories
   }
 }

@@ -5,5 +5,4 @@ export const UPDATE_PRODUCER_FORM = 'update_producer_form';
 
 
 // Producer History action
-export const INIT_HISTORY         = 'init_history';
-export const ADD_HISTORY          = 'add_history';
+export const UPDATE_HISTORIES     = 'update_history';

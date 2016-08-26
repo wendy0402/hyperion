@@ -28,7 +28,7 @@ class Producer extends Component{
               <li><a>Collection</a></li>
             </ul>
           </div>
-          <History histories={this.props.histories}/>
+          <History histories={this.props.histories} onClickHistory={this.props.updateForm}/>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">
           <div className="heading has-text-centered">

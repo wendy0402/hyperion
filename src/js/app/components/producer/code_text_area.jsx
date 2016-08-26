@@ -21,15 +21,15 @@ export default class CodeTextArea extends Component {
   }
 
   codemirrorValueChanged(doc, change) {
-		if (this.props.onChange && (change.origin != 'setValue' && change.origin != 'setCursor')) {
+    if (this.props.onChange && (change.origin != 'setValue' && change.origin != 'setCursor')) {
       let fakeEvent = {
         target: {
           name: this.props.textAreaName,
           value: doc.getValue()
         }
       }
-			this.props.onChange(fakeEvent);
-		}
+    	this.props.onChange(fakeEvent);
+    }
 	}
 
   render(){

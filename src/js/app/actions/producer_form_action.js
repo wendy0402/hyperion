@@ -23,7 +23,6 @@ export function sendMessage(params){
     }
     dispatch(sendingMessageOnProgress(paramsPayload)); // message on progress
     dispatch(addHistory(paramsPayload));
-
     producer.init()
     .then(() => {
       return producer.send({
@@ -34,12 +33,18 @@ export function sendMessage(params){
     })
     .then((result) =>{
       producer.end();
-      let successMessage = `success with topic ${result[0].topic} offset ${result[0].offset}`
-      return dispatch(finishSendMessage(
-        { result: 'success', resultMessage: successMessage }
-      ));
+      if(typeof result[0].error == 'object'){
+        console.error(result[0].error);
+        return dispatch(finishSendMessage({result: 'failed', resultMessage: result[0].error.message}));
+      } else{
+        let successMessage = `success with topic ${result[0].topic} offset ${result[0].offset}`
+        return dispatch(finishSendMessage(
+          { result: 'success', resultMessage: successMessage }
+        ));
+      }
     })
     .catch((e) =>{
+
       producer.end();
       console.error(e);
       return dispatch(finishSendMessage({result: 'failed', resultMessage: e.message}));

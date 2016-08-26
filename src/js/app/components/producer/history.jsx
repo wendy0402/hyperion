@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
 export default class History extends Component{
+  constructor(props){
+    super(props);
+    this._renderHistories = this._renderHistories.bind(this);
+  }
+  _renderHistories(){
+    let histories = this.props.histories;
+    return Object.keys(histories).map((id) => {
+      let history = histories[id];
+      return(
+        <li key={id}>
+          <a href="#">{`${history.url}/${history.topic}/${history.partition}`}</a>
+        </li>
+      );
+    })
+  }
   render(){
     return(
       <aside className="menu">
         <ul className="menu-list">
-          <p className="menu-label">20 August</p>
-
-          <li><a href="#">localhost:9091 - test ...</a></li>
-          <li><a href="#">localhost:9091</a></li>
+          {this._renderHistories()}
         </ul>
       </aside>
     );

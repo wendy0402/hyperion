@@ -24,11 +24,11 @@ class Producer extends Component{
         <div className="column is-4 is-container-vertical-scrollable">
           <div className="tabs">
             <ul>
-              <li><a>History</a></li>
-              <li className="is-active"><a>Collection</a></li>
+              <li className="is-active"><a>History</a></li>
+              <li><a>Collection</a></li>
             </ul>
           </div>
-          <History />
+          <History histories={this.props.histories}/>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">
           <div className="heading has-text-centered">
@@ -50,7 +50,8 @@ class Producer extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    producerForm: state.producerForm
+    producerForm: state.producerForm,
+    histories: state.producerHistory.histories
   };
 }
 

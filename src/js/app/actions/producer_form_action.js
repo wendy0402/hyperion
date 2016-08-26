@@ -1,4 +1,5 @@
 import { SEND_MESSAGE, FINISH_SEND_MESSAGE, UPDATE_PRODUCER_FORM } from '../constants/action_types'
+import { addHistory } from './producer_history'
 const kafka = window.nodeRequire('no-kafka');
 
 export function updateProducerForm(params){
@@ -14,7 +15,14 @@ export function sendMessage(params){
   params.message = params.message.replace(/↵/g, '\n');
   let producer = new kafka.Producer({connectionString: params.url});
   return (dispatch) => {
-    dispatch(sendingMessageOnProgress()); // message on progress
+    let paramsPayload = {
+      url: params.url,
+      message: params.message,
+      topic: params.topic,
+      partition: params.partition
+    }
+    dispatch(sendingMessageOnProgress(paramsPayload)); // message on progress
+    dispatch(addHistory(paramsPayload));
 
     producer.init()
     .then(() => {
@@ -39,9 +47,10 @@ export function sendMessage(params){
   };
 }
 
-export function sendingMessageOnProgress(){
+export function sendingMessageOnProgress(params){
   return {
     type: SEND_MESSAGE,
+    params
   }
 }
 

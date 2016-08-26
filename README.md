@@ -1,4 +1,4 @@
-# Arthur
+# HYPERION
 ## install
 ```
 npm install -g node-gyp

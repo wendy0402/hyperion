@@ -32,10 +32,8 @@ class Producer extends Component{
           <History histories={this.props.histories} onClickHistory={this.props.updateForm}/>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">
-          <div className="heading has-text-centered">
-            <h2 className="subtitle">Producer</h2>
-          </div>
           <div className= "content">
+            <p className="subtitle is-5">&nbsp;</p> {/* this is for title*/}
             <Form
               onChange={this.props.updateForm}
               params={this.props.producerForm}

@@ -9,6 +9,16 @@ export default class Header extends Component{
             <h1 className="title"> HYPERION </h1>
           </div>
         </div>
+        <div className="hero-foot">
+          <nav className="tabs is-boxed is-fullwidth">
+            <div className="container">
+              <ul>
+                <li className="is-active"><a>Producer</a></li>
+                <li><a>Modifiers</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
       </section>
     );
   }

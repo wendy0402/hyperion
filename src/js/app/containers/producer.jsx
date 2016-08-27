@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import History from '../components/producer/history'
 import Form from '../components/producer/form'
 import Result from '../components/producer/result'
+import SubNav from '../components/producer/sub_nav'
 import {updateProducerForm, sendMessage, sendingMessageOnProgress, finishSendMessage } from '../actions/producer_form_action'
 import { connect } from 'react-redux'
 import { ProducerConst } from '../constants/producer_const'
@@ -23,13 +24,10 @@ class Producer extends Component{
     return(
       <div className="columns">
         <div className="column is-4 is-container-vertical-scrollable">
-          <div className="tabs">
-            <ul>
-              <li className="is-active"><a>History</a></li>
-              <li><a>Collection</a></li>
-            </ul>
-          </div>
-          <History histories={this.props.histories} onClickHistory={this.props.updateForm}/>
+          <SubNav subRoute={this.props.subRoute}>
+            <History histories={this.props.histories} onClickHistory={this.props.updateForm} subRouteName={ProducerConst.subRoute.history}/>
+            <div></div>
+          </SubNav>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">
           <div className= "content">
@@ -50,7 +48,8 @@ class Producer extends Component{
 const mapStateToProps = (state) => {
   return {
     producerForm: state.producerForm,
-    histories: state.producerHistory.histories
+    histories: state.producerHistory.histories,
+    subRoute: state.producerRoute.subRoute
   };
 }
 

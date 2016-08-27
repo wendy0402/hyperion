@@ -9,5 +9,8 @@ export const ProducerConst = {
       success: 'success',
       failed: 'failed'
     }
+  },
+  subRoute: {
+    history: 'history'
   }
 };

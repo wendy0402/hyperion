@@ -4,6 +4,7 @@ import Form from '../components/producer/form'
 import Result from '../components/producer/result'
 import {updateProducerForm, sendMessage, sendingMessageOnProgress, finishSendMessage } from '../actions/producer_form_action'
 import { connect } from 'react-redux'
+import { ProducerConst } from '../constants/producer_const'
 
 class Producer extends Component{
   constructor(props){
@@ -12,7 +13,7 @@ class Producer extends Component{
   }
 
   renderResultMessage(){
-    if(this.props.producerForm.status === 'sent'){
+    if(this.props.producerForm.status === ProducerConst.form.status.sent){
       return(
         <Result result={this.props.producerForm.result} resultMessage={this.props.producerForm.resultMessage}/>
       );

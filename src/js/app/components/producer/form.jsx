@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import CodeTextArea from './code_text_area'
-
+import { ProducerConst } from '../../constants/producer_const'
 export default class Form extends Component{
   constructor(props){
     super(props)
@@ -25,7 +25,7 @@ export default class Form extends Component{
       topic: '',
       message: '',
       partition: 0,
-      status: 'idle'
+      status: ProducerConst.form.status.idle
     });
   }
 

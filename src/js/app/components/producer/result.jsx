@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import classNames from 'classnames'
+import { ProducerConst } from '../../constants/producer_const'
+
 export default class Result extends Component {
   render(){
     let labelClass = classNames({
       'message': true,
-      'is-success': (this.props.result === 'success'),
-      'is-danger': (this.props.result !== 'success')
+      'is-success': (this.props.result === ProducerConst.form.status.success),
+      'is-danger':  (this.props.result !== ProducerConst.form.status.success)
     })
     let messageHeader = this.props.result === 'success' ? "SUCCESS" : "FAILED"
     return(

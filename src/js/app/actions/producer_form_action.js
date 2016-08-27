@@ -1,5 +1,6 @@
 import { SEND_MESSAGE, FINISH_SEND_MESSAGE, UPDATE_PRODUCER_FORM } from '../constants/action_types'
 import { addHistory } from './producer_history'
+import { ProducerConst } from '../constants/producer_const'
 const kafka = window.nodeRequire('no-kafka');
 
 export function updateProducerForm(params){
@@ -47,7 +48,7 @@ export function sendMessage(params){
 
       producer.end();
       console.error(e);
-      return dispatch(finishSendMessage({result: 'failed', resultMessage: e.message}));
+      return dispatch(finishSendMessage({result: ProducerConst.form.result.failed, resultMessage: e.message}));
     });
   };
 }
@@ -62,7 +63,7 @@ export function sendingMessageOnProgress(params){
 export function finishSendMessage(params){ //success true or false
   return {
     type: FINISH_SEND_MESSAGE,
-    status: 'sent',
+    status: ProducerConst.form.status.sent,
     resultMessage: params.resultMessage,
     result: params.result
   }

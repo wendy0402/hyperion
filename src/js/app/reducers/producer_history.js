@@ -7,10 +7,6 @@ const initialState = {
 export default function producerHistory(state= initialState, action){
   switch(action.type){
     case UPDATE_HISTORIES:
-      let historiesObj = action.histories.reduce(function(histories, history, index) {
-        histories[history.id] = history;
-        return histories;
-      }, {});
       return Object.assign({}, state, {
         histories: action.histories
       });

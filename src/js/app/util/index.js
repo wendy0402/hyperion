@@ -1,5 +1,6 @@
 export function arrayModelToObj(models=[]){
-  return models.map((prev, curr){
+  return models.reduce((prev, curr) =>{
     prev[curr.id] = curr
+    return prev
   }, {});
 }

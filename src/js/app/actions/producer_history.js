@@ -1,7 +1,7 @@
 import { UPDATE_HISTORIES } from '../constants/action_types'
 
 import { History } from '../model/history'
-
+import { arrayModelToObj } from '../util'
 export function initializeHistory(){
   return (dispatch) => { fetchAllHistories(dispatch) }
 }
@@ -18,9 +18,9 @@ function fetchAllHistories(dispatch){
   });
 }
 
-function _updateHistory(histories){
+function _updateHistory(histories=[]){
   return {
     type: UPDATE_HISTORIES,
-    histories: histories
+    histories: arrayModelToObj(histories)
   }
 }

@@ -3,7 +3,11 @@ import History from '../components/producer/history'
 import Form from '../components/producer/form'
 import Result from '../components/producer/result'
 import SubNav from '../components/producer/sub_nav'
+import SaveForm from '../components/producer/save_form'
+
 import {updateProducerForm, sendMessage, sendingMessageOnProgress, finishSendMessage } from '../actions/producer_form_action'
+import { openSaveForm, closeSaveForm } from '../actions/producer_save_form'
+
 import { connect } from 'react-redux'
 import { ProducerConst } from '../constants/producer_const'
 
@@ -36,10 +40,13 @@ class Producer extends Component{
               onChange={this.props.updateForm}
               params={this.props.producerForm}
               onSubmit={this.props.sendForm}
-              isSending={this.props.producerForm.status === 'sending'}/>
+              isSending={this.props.producerForm.status === 'sending'}
+              onClickSave={this.props.openSaveForm}
+            />
           </div>
           {this.renderResultMessage()}
         </div>
+        <SaveForm active={this.props.saveForm.active} deactivate={this.props.closeSaveForm}/>
       </div>
     );
   }
@@ -49,14 +56,17 @@ const mapStateToProps = (state) => {
   return {
     producerForm: state.producerForm,
     histories: state.producerHistory.histories,
-    subRoute: state.producerRoute.subRoute
+    subRoute: state.producerRoute.subRoute,
+    saveForm: state.producerSaveForm
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateForm: (params) => { dispatch(updateProducerForm(params)); },
-    sendForm: (params) => { dispatch(sendMessage(params))}
+    sendForm: (params) => { dispatch(sendMessage(params)) },
+    openSaveForm: () => { dispatch(openSaveForm()) },
+    closeSaveForm: () => { dispatch(closeSaveForm()) }
   };
 }
 

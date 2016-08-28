@@ -7,6 +7,7 @@ export default class Form extends Component{
     this.updateForm = this.updateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.resetForm  = this.resetForm.bind(this);
+    this.openSaveForm = this.openSaveForm.bind(this);
   }
 
   updateForm(e){
@@ -29,6 +30,11 @@ export default class Form extends Component{
     });
   }
 
+  openSaveForm(e){
+    e.preventDefault();
+    this.props.onClickSave();
+  }
+
   render(){
     return(
       <form onSubmit={this.submitForm}>
@@ -49,10 +55,11 @@ export default class Form extends Component{
         <div className="control">
           <CodeTextArea codemirrorId="codemirror-text" textAreaName="message" className="textarea"  onChange={this.updateForm} value={this.props.params.message}/>
         </div>
-        <p className="control">
-          <button className="button is-primary" type="submit" disabled={this.props.isSending}>{this.props.isSending ? 'Sending...' : 'Send'}</button>
-          <button className="button is-danger" onClick={this.resetForm} disabled={this.props.isSending}>Reset</button>
-        </p>
+        <div className="control">
+            <button className="button is-primary" type="submit" disabled={this.props.isSending}>{this.props.isSending ? 'Sending...' : 'Send'}</button>
+            <button className="button is-danger" onClick={this.resetForm} disabled={this.props.isSending}>Reset</button>
+            <button className="button is-info" onClick={this.openSaveForm}>Save</button>
+        </div>
       </form>
     );
   }

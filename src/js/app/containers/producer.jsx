@@ -6,7 +6,7 @@ import SubNav from '../components/producer/sub_nav'
 import SaveForm from '../components/producer/save_form'
 
 import {updateProducerForm, sendMessage, sendingMessageOnProgress, finishSendMessage } from '../actions/producer_form_action'
-import { openSaveForm, closeSaveForm } from '../actions/producer_save_form'
+import { openSaveForm, closeSaveForm, createCollection, useNewCollectionField, useExistingCollectionField, updateSaveFormField } from '../actions/producer_save_form'
 
 import { connect } from 'react-redux'
 import { ProducerConst } from '../constants/producer_const'
@@ -30,7 +30,6 @@ class Producer extends Component{
         <div className="column is-4 is-container-vertical-scrollable">
           <SubNav subRoute={this.props.subRoute}>
             <History histories={this.props.histories} onClickHistory={this.props.updateForm} subRouteName={ProducerConst.subRoute.history}/>
-            <div></div>
           </SubNav>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">
@@ -46,7 +45,17 @@ class Producer extends Component{
           </div>
           {this.renderResultMessage()}
         </div>
-        <SaveForm active={this.props.saveForm.active} deactivate={this.props.closeSaveForm}/>
+        <SaveForm
+          active={this.props.saveForm.active}
+          form={this.props.saveForm.form}
+          newCollection={this.props.saveForm.newCollection}
+
+          deactivate={this.props.closeSaveForm}
+          templateCollections={this.props.saveForm.templateCollections}
+          useNewCollectionField={this.props.useNewCollectionField}
+          useExistingCollectionField={this.props.useExistingCollectionField}
+          updateSaveFormField={this.props.updateSaveFormField}
+        />
       </div>
     );
   }
@@ -63,10 +72,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateForm: (params) => { dispatch(updateProducerForm(params)); },
-    sendForm: (params) => { dispatch(sendMessage(params)) },
-    openSaveForm: () => { dispatch(openSaveForm()) },
-    closeSaveForm: () => { dispatch(closeSaveForm()) }
+    updateForm:               (params)  => { dispatch(updateProducerForm(params)) },
+    sendForm:                 (params)  => { dispatch(sendMessage(params)) },
+    //
+    openSaveForm:               ()        => { dispatch(openSaveForm()) },
+    closeSaveForm:              ()        => { dispatch(closeSaveForm()) },
+    useNewCollectionField:      ()        => { dispatch(useNewCollectionField()) },
+    useExistingCollectionField: ()        => { dispatch(useExistingCollectionField()) },
+    updateSaveFormField:        (params)  => { dispatch(updateSaveFormField(params)) }
   };
 }
 

@@ -8,42 +8,55 @@ export default class SaveForm extends Component{
     }
 
     this.deactivate = this.deactivate.bind(this);
-    this.createNewCollection = this.createNewCollection.bind(this);
+    this.useNewCollectionField = this.useNewCollectionField.bind(this);
     this.useExistingCollection = this.useExistingCollection.bind(this);
+    this.updateSaveFormField = this.updateSaveFormField.bind(this);
   }
   deactivate(e){
     e.preventDefault();
     this.props.deactivate();
   }
 
-  createNewCollection(){
-    this.setState({newCollection: true})
+  useNewCollectionField(e){
+    e.preventDefault();
+    this.props.useNewCollectionField();
+    this.props.updateSaveFormField({selectedCollection: ""})
   }
 
-  useExistingCollection(){
-    this.setState({newCollection: false})
+  useExistingCollection(e){
+    e.preventDefault();
+    this.props.useExistingCollectionField();
+    this.props.updateSaveFormField({newCollectionName: ""})
+  }
+
+  updateSaveFormField(e){
+    e.preventDefault();
+    this.props.updateSaveFormField({[e.target.name]: e.target.value})
   }
 
   collectionInput(){
-    if(this.state.newCollection){
+    if(this.props.newCollection){
       return(
         <p className="control">
-          <input className="input" type="text" name="newCollection" placeholder="new collection"/>
+          <input className="input" type="text" name="newCollectionName" placeholder="new collection" value={this.props.form.newCollectionName} onChange={this.updateSaveFormField}/>
           <br/>
           &nbsp;<a href="#" onClick={this.useExistingCollection}>use existing collection</a>
         </p>
       );
     } else{
+      let templateCollections = this.props.templateCollections
+      let collectionNameOptions = Object.keys(templateCollections).map((id) => {
+        return(<option value={id} key={id}>{templateCollections[id].name}</option>)
+      });
       return(
         <p className="control">
           <span className="select">
-            <select>
-              <option>Select dropdown</option>
-              <option>With options</option>
+            <select value={this.props.form.selectedCollection} onChange={this.updateSaveFormField} name="selectedCollection">
+              {collectionNameOptions}
             </select>
           </span>
           <br/>
-          &nbsp;<a href="#" onClick={this.createNewCollection}>create new collection</a>
+          &nbsp;<a href="#" onClick={this.useNewCollectionField}>create new collection</a>
         </p>
       );
     }
@@ -65,14 +78,14 @@ export default class SaveForm extends Component{
           </header>
 
           <section className="modal-card-body">
-            <form>
+            <div>
               <label className="label">Collection</label>
               {this.collectionInput()}
               <label className="label">Name</label>
               <p className="control">
-                <input className="input" type="text" name="name" placeholder="Name"/>
+                <input className="input" type="text" name="templateName" placeholder="Template Name" value={this.props.form.templateName} onChange={this.updateSaveFormField}/>
               </p>
-            </form>
+            </div>
           </section>
 
           <footer className="modal-card-foot">

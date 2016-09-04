@@ -1,6 +1,6 @@
 import Db from './db'
 
-class HistoryCollection {
+class HistoryModel {
   constructor(){
     this.conn   = Db.histories;
     this.limit  = 20;
@@ -30,4 +30,4 @@ class HistoryCollection {
   };
 }
 
-export const History = new HistoryCollection();
+export const History = new HistoryModel();

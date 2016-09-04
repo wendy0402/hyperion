@@ -1,4 +1,11 @@
-import { CLOSE_SAVE_FORM, OPEN_SAVE_FORM, USE_EXISTING_COLLECTION_FIELD, USE_NEW_COLLECTION_FIELD, UPDATE_SAVE_FORM_FIELD, CREATE_COLLECTION } from '../constants/action_types'
+import {
+  CLOSE_SAVE_FORM,
+  OPEN_SAVE_FORM,
+  USE_EXISTING_COLLECTION_FIELD,
+  USE_NEW_COLLECTION_FIELD,
+  UPDATE_SAVE_FORM_FIELD,
+  CREATE_COLLECTION
+} from '../constants/action_types'
 const initialState = {
   active: false,
   newCollection: false,

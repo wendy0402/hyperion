@@ -23,7 +23,23 @@ class Producer extends Component{
   constructor(props){
     super(props);
     this.renderResultMessage = this.renderResultMessage.bind(this);
+    // container logic
+    this.createCollectionSaveForm = this.createCollectionSaveForm.bind(this);
   }
+
+  // container logic
+  createCollectionSaveForm(collectionName, templateName){
+    let templateParams = {
+      name: templateName,
+      url: this.props.producerForm.url,
+      topic: this.props.producerForm.topic,
+      message: this.props.producerForm.message,
+      partition: this.props.producerForm.partition
+    }
+
+    this.props.createCollectionWithTemplate(collectionName, templateParams)
+  }
+  // container logic
 
   renderResultMessage(){
     if(this.props.producerForm.status === ProducerConst.form.status.sent){
@@ -32,6 +48,7 @@ class Producer extends Component{
       );
     }
   }
+
   render(){
     return(
       <div className="columns">
@@ -63,7 +80,7 @@ class Producer extends Component{
           useNewCollectionField={this.props.useNewCollectionField}
           useExistingCollectionField={this.props.useExistingCollectionField}
           updateSaveFormField={this.props.updateSaveFormField}
-          createNewCollection={this.props.createCollectionWithTemplate}
+          createNewCollection={this.createCollectionSaveForm}
         />
       </div>
     );
@@ -89,8 +106,8 @@ const mapDispatchToProps = (dispatch) => {
     useNewCollectionField:      ()        => { dispatch(useNewCollectionField()) },
     useExistingCollectionField: ()        => { dispatch(useExistingCollectionField()) },
     updateSaveFormField:        (params)  => { dispatch(updateSaveFormField(params)) },
-    createCollectionWithTemplate: (CollectionName, TemplateName) => {
-      dispatch(createCollectionWithTemplate(CollectionName, TemplateName))
+    createCollectionWithTemplate: (CollectionName, tempateParams={}) => {
+      dispatch(createCollectionWithTemplate(CollectionName, tempateParams))
     }
   };
 }

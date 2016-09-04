@@ -43,7 +43,6 @@ export function updateSaveFormField(formValues){
 
 export function createCollectionWithTemplate(collectionName, templateParams){
   let _template = Template;
-  debugger;
   return(
     (dispatch) =>{
       let params = { name: collectionName }

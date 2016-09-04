@@ -6,8 +6,7 @@ class TemplateCollectionModel{
   }
 
   add(params={}){
-    _params = {
-      id: params.id,
+    let _params = {
       name: params.name
     }
     return this.conn.add(_params);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
+import { ProducerConst } from '../../constants/producer_const'
 export default class SaveForm extends Component{
   constructor(props){
     super(props);
@@ -11,6 +12,8 @@ export default class SaveForm extends Component{
     this.useNewCollectionField = this.useNewCollectionField.bind(this);
     this.useExistingCollection = this.useExistingCollection.bind(this);
     this.updateSaveFormField = this.updateSaveFormField.bind(this);
+    this.save = this.save.bind(this);
+    this.flashMessage = this.flashMessage.bind(this);
   }
   deactivate(e){
     e.preventDefault();
@@ -32,6 +35,13 @@ export default class SaveForm extends Component{
   updateSaveFormField(e){
     e.preventDefault();
     this.props.updateSaveFormField({[e.target.name]: e.target.value})
+  }
+
+  save(e){
+    e.preventDefault();
+    if(this.props.newCollection){
+      this.props.createNewCollection(this.props.form.newCollectionName, this.props.form.templateName);
+    }
   }
 
   collectionInput(){
@@ -62,6 +72,19 @@ export default class SaveForm extends Component{
     }
   }
 
+  flashMessage(){
+    console.log(this.props.form);
+    if(this.props.form.result === ProducerConst.saveForm.result['failed']){
+      return(
+        <article className="message is-danger">
+          <div className="message-body">
+            {this.props.form.resultMessage}
+          </div>
+        </article>
+      );
+    }
+  }
+
   render(){
     let modalClassName = classNames({
       'modal': true,
@@ -78,6 +101,7 @@ export default class SaveForm extends Component{
           </header>
 
           <section className="modal-card-body">
+            {this.flashMessage()}
             <div>
               <label className="label">Collection</label>
               {this.collectionInput()}
@@ -89,7 +113,7 @@ export default class SaveForm extends Component{
           </section>
 
           <footer className="modal-card-foot">
-            <a className="button is-primary">Save</a>
+            <a className="button is-primary" onClick={this.save}>Save</a>
             <a className="button" onClick={this.deactivate}>Cancel</a>
           </footer>
         </div>

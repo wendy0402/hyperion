@@ -6,7 +6,15 @@ import SubNav from '../components/producer/sub_nav'
 import SaveForm from '../components/producer/save_form'
 
 import {updateProducerForm, sendMessage, sendingMessageOnProgress, finishSendMessage } from '../actions/producer_form_action'
-import { openSaveForm, closeSaveForm, createCollection, useNewCollectionField, useExistingCollectionField, updateSaveFormField } from '../actions/producer_save_form'
+import {
+  openSaveForm,
+  closeSaveForm,
+  createCollection,
+  useNewCollectionField,
+  useExistingCollectionField,
+  updateSaveFormField,
+  createCollectionWithTemplate
+} from '../actions/producer_save_form'
 
 import { connect } from 'react-redux'
 import { ProducerConst } from '../constants/producer_const'
@@ -55,6 +63,7 @@ class Producer extends Component{
           useNewCollectionField={this.props.useNewCollectionField}
           useExistingCollectionField={this.props.useExistingCollectionField}
           updateSaveFormField={this.props.updateSaveFormField}
+          createNewCollection={this.props.createCollectionWithTemplate}
         />
       </div>
     );
@@ -79,7 +88,10 @@ const mapDispatchToProps = (dispatch) => {
     closeSaveForm:              ()        => { dispatch(closeSaveForm()) },
     useNewCollectionField:      ()        => { dispatch(useNewCollectionField()) },
     useExistingCollectionField: ()        => { dispatch(useExistingCollectionField()) },
-    updateSaveFormField:        (params)  => { dispatch(updateSaveFormField(params)) }
+    updateSaveFormField:        (params)  => { dispatch(updateSaveFormField(params)) },
+    createCollectionWithTemplate: (CollectionName, TemplateName) => {
+      dispatch(createCollectionWithTemplate(CollectionName, TemplateName))
+    }
   };
 }
 

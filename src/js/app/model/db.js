@@ -10,4 +10,9 @@ Db.version(2).stores({
   template_collections: '++id,name'
 });
 
+Db.version(3).stores({
+  histories: '++id,url,topic,partition,message',
+  template_collections: '++id,name',
+  templates: '++id,url,topic,partition,message,name,templateCollectionID'
+});
 export default Db;

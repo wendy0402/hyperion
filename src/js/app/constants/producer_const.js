@@ -12,5 +12,11 @@ export const ProducerConst = {
   },
   subRoute: {
     history: 'history'
+  },
+  saveForm: {
+    result: {
+      success: 'success',
+      failed: 'failed'
+    }
   }
 };

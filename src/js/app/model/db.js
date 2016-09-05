@@ -15,4 +15,11 @@ Db.version(3).stores({
   template_collections: '++id,name',
   templates: '++id,url,topic,partition,message,name,templateCollectionID'
 });
+
+Db.version(3).stores({
+  histories: '++id,url,topic,partition,message',
+  template_collections: '++id,name',
+  templates: '++id,url,topic,partition,message,name,collection_id'
+});
+
 export default Db;

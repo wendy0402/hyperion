@@ -48,10 +48,11 @@ export function createCollectionWithTemplate(collectionName, templateParams){
       let params = { name: collectionName }
       TemplateCollection.add(params)
       .then((id)=>{
-        return _template.add(Object.assign({}, templateParams, {collectionID: id}))
+        return _template.add(Object.assign({}, templateParams, {collection_id: id}))
       })
       .then((id) =>{
         dispatch({ type: CREATE_COLLECTION, result: ProducerConst.saveForm.result['success'], resultMessage: "success to store"});
+        dispatch(updateSaveFormField({selectedCollection: "", newCollectionName: "", templateName: ""}))
         dispatch(closeSaveForm());
       })
       .catch((e)=>{

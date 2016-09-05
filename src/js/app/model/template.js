@@ -11,7 +11,8 @@ class TemplateModel{
       name: params.name,
       topic: params.topic,
       message: params.message,
-      partition: params.partition
+      partition: params.partition,
+      collection_id: params.collection_id
     }
     return this.conn.add(_params);
   }

@@ -41,6 +41,8 @@ export default class SaveForm extends Component{
     e.preventDefault();
     if(this.props.newCollection){
       this.props.createNewCollection(this.props.form.newCollectionName, this.props.form.templateName);
+    } else{
+      this.props.addTemplateToCollection(this.props.form.selectedCollection, this.props.form.templateName);
     }
   }
 
@@ -58,6 +60,8 @@ export default class SaveForm extends Component{
       let collectionNameOptions = Object.keys(templateCollections).map((id) => {
         return(<option value={id} key={id}>{templateCollections[id].name}</option>)
       });
+
+      collectionNameOptions.unshift(<option value="" key=""></option>);
       return(
         <p className="control">
           <span className="select">

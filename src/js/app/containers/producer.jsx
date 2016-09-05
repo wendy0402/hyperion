@@ -13,7 +13,8 @@ import {
   useNewCollectionField,
   useExistingCollectionField,
   updateSaveFormField,
-  createCollectionWithTemplate
+  createCollectionWithTemplate,
+  addTemplateToCollection
 } from '../actions/producer_save_form'
 
 import { connect } from 'react-redux'
@@ -25,6 +26,7 @@ class Producer extends Component{
     this.renderResultMessage = this.renderResultMessage.bind(this);
     // container logic
     this.createCollectionSaveForm = this.createCollectionSaveForm.bind(this);
+    this.addTemplateSaveForm = this.addTemplateSaveForm.bind(this);
   }
 
   // container logic
@@ -38,6 +40,18 @@ class Producer extends Component{
     }
 
     this.props.createCollectionWithTemplate(collectionName, templateParams)
+  }
+
+  addTemplateSaveForm(collectionID, templateName) {
+    let templateParams = {
+      name: templateName,
+      url: this.props.producerForm.url,
+      topic: this.props.producerForm.topic,
+      message: this.props.producerForm.message,
+      partition: this.props.producerForm.partition
+    }
+
+    this.props.addTemplateToCollection(collectionID, templateParams)
   }
   // container logic
 
@@ -81,6 +95,7 @@ class Producer extends Component{
           useExistingCollectionField={this.props.useExistingCollectionField}
           updateSaveFormField={this.props.updateSaveFormField}
           createNewCollection={this.createCollectionSaveForm}
+          addTemplateToCollection={this.addTemplateSaveForm}
         />
       </div>
     );
@@ -106,8 +121,11 @@ const mapDispatchToProps = (dispatch) => {
     useNewCollectionField:      ()        => { dispatch(useNewCollectionField()) },
     useExistingCollectionField: ()        => { dispatch(useExistingCollectionField()) },
     updateSaveFormField:        (params)  => { dispatch(updateSaveFormField(params)) },
-    createCollectionWithTemplate: (CollectionName, tempateParams={}) => {
+    createCollectionWithTemplate: (collectionName, tempateParams={}) => {
       dispatch(createCollectionWithTemplate(CollectionName, tempateParams))
+    },
+    addTemplateToCollection: (collectionID, tempateParams={}) => {
+      dispatch(addTemplateToCollection(collectionID, tempateParams))
     }
   };
 }

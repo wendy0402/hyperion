@@ -40,6 +40,21 @@ export function useExistingCollectionField(){
 export function updateSaveFormField(formValues){
   return({ type: UPDATE_SAVE_FORM_FIELD, formValues });
 }
+// @TODO: refactor, code add Template with create collection almost same
+export function addTemplateToCollection(collectionID, templateParams){
+  return((dispatch) =>{
+    Template.add(Object.assign({}, templateParams, { collection_id: collectionID }))
+    .then((id) =>{
+      dispatch({ type: CREATE_COLLECTION, result: ProducerConst.saveForm.result['success'], resultMessage: "success to store"});
+      dispatch(updateSaveFormField({selectedCollection: "", newCollectionName: "", templateName: ""}))
+      dispatch(closeSaveForm());
+    })
+    .catch((e)=>{
+      console.error(e)
+      dispatch({ type: CREATE_COLLECTION, result: ProducerConst.saveForm.result['failed'], resultMessage: e.message });
+    });
+  })
+}
 
 export function createCollectionWithTemplate(collectionName, templateParams){
   let _template = Template;
@@ -59,7 +74,6 @@ export function createCollectionWithTemplate(collectionName, templateParams){
         console.error(e)
         dispatch({ type: CREATE_COLLECTION, result: ProducerConst.saveForm.result['failed'], resultMessage: e.message });
       });
-
     }
   );
 }

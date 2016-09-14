@@ -123,7 +123,7 @@ const mapDispatchToProps = (dispatch) => {
     useExistingCollectionField: ()        => { dispatch(useExistingCollectionField()) },
     updateSaveFormField:        (params)  => { dispatch(updateSaveFormField(params)) },
     createCollectionWithTemplate: (collectionName, tempateParams={}) => {
-      dispatch(createCollectionWithTemplate(CollectionName, tempateParams))
+      dispatch(createCollectionWithTemplate(collectionName, tempateParams))
     },
     addTemplateToCollection: (collectionID, tempateParams={}) => {
       dispatch(addTemplateToCollection(collectionID, tempateParams))

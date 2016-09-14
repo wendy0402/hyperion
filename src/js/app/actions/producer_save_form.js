@@ -1,5 +1,6 @@
 import {
   CLOSE_SAVE_FORM,
+  UPDATE_COLLECTIONS,
   OPEN_SAVE_FORM,
   USE_NEW_COLLECTION_FIELD,
   USE_EXISTING_COLLECTION_FIELD,
@@ -21,9 +22,12 @@ export function openSaveForm(){
     (dispatch) =>{
       TemplateCollection.fetchAll((templateCollections) =>{
         dispatch({
-          type: OPEN_SAVE_FORM,
+          type: UPDATE_COLLECTIONS,
           templateCollections: arrayModelToObj(templateCollections)
         });
+        dispatch({
+          type: OPEN_SAVE_FORM
+        })
       });
     }
   );

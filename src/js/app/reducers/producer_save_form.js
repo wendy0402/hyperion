@@ -9,7 +9,6 @@ import {
 const initialState = {
   active: false,
   newCollection: false,
-  templateCollections: [],
   form: {
     selectedCollection: "",
     newCollectionName: "",
@@ -23,7 +22,6 @@ export default function producerSaveForm(state=initialState, action){
     case OPEN_SAVE_FORM:
       return Object.assign({}, state, {
         active: true,
-        templateCollections: action.templateCollections
       });
     case USE_EXISTING_COLLECTION_FIELD:
       return Object.assign({}, state, {

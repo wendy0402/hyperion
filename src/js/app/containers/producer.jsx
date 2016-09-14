@@ -90,7 +90,7 @@ class Producer extends Component{
           newCollection={this.props.saveForm.newCollection}
 
           deactivate={this.props.closeSaveForm}
-          templateCollections={this.props.saveForm.templateCollections}
+          templateCollections={this.props.collections.templateCollections}
           useNewCollectionField={this.props.useNewCollectionField}
           useExistingCollectionField={this.props.useExistingCollectionField}
           updateSaveFormField={this.props.updateSaveFormField}
@@ -107,7 +107,8 @@ const mapStateToProps = (state) => {
     producerForm: state.producerForm,
     histories: state.producerHistory.histories,
     subRoute: state.producerRoute.subRoute,
-    saveForm: state.producerSaveForm
+    saveForm: state.producerSaveForm,
+    collections: state.producerCollection
   };
 }
 

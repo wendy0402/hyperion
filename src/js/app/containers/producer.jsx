@@ -4,8 +4,9 @@ import Form from '../components/producer/form'
 import Result from '../components/producer/result'
 import SubNav from '../components/producer/sub_nav'
 import SaveForm from '../components/producer/save_form'
-
+import Collection from '../components/producer/collection'
 import {updateProducerForm, sendMessage, sendingMessageOnProgress, finishSendMessage } from '../actions/producer_form_action'
+import {changeProducerSubRoute} from '../actions/producer_route'
 import {
   openSaveForm,
   closeSaveForm,
@@ -64,11 +65,13 @@ class Producer extends Component{
   }
 
   render(){
+    console.log(this.props);
     return(
       <div className="columns">
         <div className="column is-4 is-container-vertical-scrollable">
-          <SubNav subRoute={this.props.subRoute}>
-            <History histories={this.props.histories} onClickHistory={this.props.updateForm} subRouteName={ProducerConst.subRoute.history}/>
+          <SubNav subRoute={this.props.subRoute} changeProducerSubRoute={this.props.changeProducerSubRoute}>
+            <History histories={this.props.histories} onClickHistory={this.props.updateForm} subRouteName={ProducerConst.subRoute.history} subNavName={"Histories"}/>
+            <Collection subRouteName={ProducerConst.subRoute.collection} collections={this.props.collections} subNavName={"Collections"}/>
           </SubNav>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">
@@ -127,6 +130,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     addTemplateToCollection: (collectionID, tempateParams={}) => {
       dispatch(addTemplateToCollection(collectionID, tempateParams))
+    },
+    changeProducerSubRoute: (subRouteName)=> {
+      dispatch(changeProducerSubRoute(subRouteName));
     }
   };
 }

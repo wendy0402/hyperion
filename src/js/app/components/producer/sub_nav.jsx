@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
+import {bindActionCreators} from 'redux'
 import History from './history'
 import classNames from 'classnames'
 import { ProducerConst } from '../../constants/producer_const'
+import * as ProducerRoute from '../../actions/producer_route'
+
 export default class SubNav extends Component{
   constructor(props){
     super(props);
-    this.historyClassName = this.historyClassName.bind(this);
     this.currentSubRoute = this.currentSubRoute.bind(this);
+    this.childrenNodes = this.childrenNodes.bind(this);
+    this.renderNavLink = this.renderNavLink.bind(this);
+    this.actions = bindActionCreators(ProducerRoute, this.props.dispatch);
+
   }
-  historyClassName(){
-    return classNames({
-      "is-active": this.props.subRoute === ProducerConst.subRoute.history
-    });
+
+  childrenNodes(){
+    return Array.isArray(this.props.children) ? this.props.children : [this.props.children];
   }
 
   currentSubRoute(){
-    let childrenNode = Array.isArray(this.props.children) ? this.props.children : [this.props.children];
     var currentSubNode = null;
 
-    for(const childNode of childrenNode) {
+    for(const childNode of this.childrenNodes()) {
       if(childNode.props.subRouteName === this.props.subRoute){
         currentSubNode = childNode;
         break;
@@ -26,13 +30,27 @@ export default class SubNav extends Component{
     }
     return currentSubNode
   }
+
+  renderNavLink(){
+    return this.childrenNodes().map((childNode) => {
+      let subRouteName = childNode.props.subRouteName;
+      let liClassName = classNames({
+        "is-active": this.props.subRoute === subRouteName
+      });
+      let onClick = (e) => {
+        e.preventDefault();
+        this.props.changeProducerSubRoute(subRouteName);
+      };
+
+      return (<li key={subRouteName} className={liClassName} onClick={onClick}><a>{childNode.props.subNavName}</a></li>);
+    });
+  }
   render(){
     return(
       <div>
         <div className="tabs">
           <ul>
-            <li className={this.historyClassName()}><a>History</a></li>
-            <li><a>Collection</a></li>
+            {this.renderNavLink()}
           </ul>
         </div>
         {this.currentSubRoute()}

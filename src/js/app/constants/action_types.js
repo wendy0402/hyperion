@@ -14,5 +14,8 @@ export const UPDATE_SAVE_FORM_FIELD           = 'UPDATE_SAVE_FORM_FIELD';
 export const USE_NEW_COLLECTION_FIELD         = 'USE_NEW_COLLECTION_FIELD';
 export const USE_EXISTING_COLLECTION_FIELD    = 'USE_EXISTING_COLLECTION_FIELD';
 export const SUBMIT_SAVE_FORM           = 'SUBMIT_SAVE_FORM';
+
+// producer collection
 export const CREATE_COLLECTION          = 'CREATE_COLLECTION';
 export const UPDATE_COLLECTIONS         = 'UPDATE_COLLECTIONS';
+export const CHANGE_SUBROUTE  = 'CHANGE_SUBROUTE'

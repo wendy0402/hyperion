@@ -11,17 +11,17 @@ export default class Form extends Component{
   }
 
   updateForm(e){
-    this.props.onChange({[e.target.name]: e.target.value});
+    this.props.actions.updateProducerForm({[e.target.name]: e.target.value});
   }
 
   submitForm(e){
     e.preventDefault();
-    this.props.onSubmit(this.props.params);
+    this.props.actions.sendMessage(this.props.params);
   }
 
   resetForm(e){
     e.preventDefault();
-    this.props.onChange({
+    this.props.actions.updateProducerForm({
       url: '',
       topic: '',
       message: '',

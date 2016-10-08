@@ -1,25 +1,18 @@
 import React, { Component } from 'react'
+import {bindActionCreators} from 'redux'
+import { connect } from 'react-redux'
+import { ProducerConst } from '../constants/producer_const'
+
 import History from '../components/producer/history'
 import Form from '../components/producer/form'
 import Result from '../components/producer/result'
 import SubNav from '../components/producer/sub_nav'
 import SaveForm from '../components/producer/save_form'
 import Collection from '../components/producer/collection'
-import {updateProducerForm, sendMessage, sendingMessageOnProgress, finishSendMessage } from '../actions/producer_form_action'
-import {changeProducerSubRoute} from '../actions/producer_route'
-import {
-  openSaveForm,
-  closeSaveForm,
-  createCollection,
-  useNewCollectionField,
-  useExistingCollectionField,
-  updateSaveFormField,
-  createCollectionWithTemplate,
-  addTemplateToCollection
-} from '../actions/producer_save_form'
 
-import { connect } from 'react-redux'
-import { ProducerConst } from '../constants/producer_const'
+import * as ProducerFormAction from '../actions/producer_form_action'
+import * as ProducerRouteAction from '../actions/producer_route'
+import * as ProducerSaveFormAction from '../actions/producer_save_form'
 
 class Producer extends Component{
   constructor(props){
@@ -28,6 +21,9 @@ class Producer extends Component{
     // container logic
     this.createCollectionSaveForm = this.createCollectionSaveForm.bind(this);
     this.addTemplateSaveForm = this.addTemplateSaveForm.bind(this);
+    this.producerSaveFormAction = bindActionCreators(ProducerSaveFormAction, props.dispatch);
+    this.producerFormAction = bindActionCreators(ProducerFormAction, props.dispatch);
+    this.ProducerRouteAction = bindActionCreators(ProducerRouteAction, props.dispatch);
   }
 
   // container logic
@@ -40,7 +36,7 @@ class Producer extends Component{
       partition: this.props.producerForm.partition
     }
 
-    this.props.createCollectionWithTemplate(collectionName, templateParams)
+    this.producerSaveFormAction.createCollectionWithTemplate(collectionName, templateParams)
   }
 
   addTemplateSaveForm(collectionID, templateName) {
@@ -52,7 +48,7 @@ class Producer extends Component{
       partition: this.props.producerForm.partition
     }
 
-    this.props.addTemplateToCollection(collectionID, templateParams)
+    this.producerSaveFormAction.addTemplateToCollection(collectionID, templateParams)
   }
   // container logic
 
@@ -65,11 +61,10 @@ class Producer extends Component{
   }
 
   render(){
-    console.log(this.props);
     return(
       <div className="columns">
         <div className="column is-4 is-container-vertical-scrollable">
-          <SubNav subRoute={this.props.subRoute} changeProducerSubRoute={this.props.changeProducerSubRoute}>
+          <SubNav subRoute={this.props.subRoute} actions={this.ProducerRouteAction} changeProducerSubRoute={this.props.changeProducerSubRoute}>
             <History histories={this.props.histories} onClickHistory={this.props.updateForm} subRouteName={ProducerConst.subRoute.history} subNavName={"Histories"}/>
             <Collection subRouteName={ProducerConst.subRoute.collection} collections={this.props.collections} subNavName={"Collections"}/>
           </SubNav>
@@ -78,11 +73,12 @@ class Producer extends Component{
           <div className= "content">
             <p className="subtitle is-5">&nbsp;</p> {/* this is for title*/}
             <Form
+              actions={this.producerFormAction}
               onChange={this.props.updateForm}
               params={this.props.producerForm}
-              onSubmit={this.props.sendForm}
+
               isSending={this.props.producerForm.status === 'sending'}
-              onClickSave={this.props.openSaveForm}
+              onClickSave={this.producerSaveFormAction.openSaveForm}
             />
           </div>
           {this.renderResultMessage()}
@@ -91,12 +87,9 @@ class Producer extends Component{
           active={this.props.saveForm.active}
           form={this.props.saveForm.form}
           newCollection={this.props.saveForm.newCollection}
+          actions={this.producerSaveFormAction}
 
-          deactivate={this.props.closeSaveForm}
           templateCollections={this.props.collections.templateCollections}
-          useNewCollectionField={this.props.useNewCollectionField}
-          useExistingCollectionField={this.props.useExistingCollectionField}
-          updateSaveFormField={this.props.updateSaveFormField}
           createNewCollection={this.createCollectionSaveForm}
           addTemplateToCollection={this.addTemplateSaveForm}
         />
@@ -115,29 +108,6 @@ const mapStateToProps = (state) => {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateForm:               (params)  => { dispatch(updateProducerForm(params)) },
-    sendForm:                 (params)  => { dispatch(sendMessage(params)) },
-    //
-    openSaveForm:               ()        => { dispatch(openSaveForm()) },
-    closeSaveForm:              ()        => { dispatch(closeSaveForm()) },
-    useNewCollectionField:      ()        => { dispatch(useNewCollectionField()) },
-    useExistingCollectionField: ()        => { dispatch(useExistingCollectionField()) },
-    updateSaveFormField:        (params)  => { dispatch(updateSaveFormField(params)) },
-    createCollectionWithTemplate: (collectionName, tempateParams={}) => {
-      dispatch(createCollectionWithTemplate(collectionName, tempateParams))
-    },
-    addTemplateToCollection: (collectionID, tempateParams={}) => {
-      dispatch(addTemplateToCollection(collectionID, tempateParams))
-    },
-    changeProducerSubRoute: (subRouteName)=> {
-      dispatch(changeProducerSubRoute(subRouteName));
-    }
-  };
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Producer);

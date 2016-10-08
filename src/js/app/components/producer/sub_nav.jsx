@@ -39,7 +39,7 @@ export default class SubNav extends Component{
       });
       let onClick = (e) => {
         e.preventDefault();
-        this.props.changeProducerSubRoute(subRouteName);
+        this.props.actions.changeProducerSubRoute(subRouteName);
       };
 
       return (<li key={subRouteName} className={liClassName} onClick={onClick}><a>{childNode.props.subNavName}</a></li>);

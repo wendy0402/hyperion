@@ -22,19 +22,19 @@ export default class SaveForm extends Component{
 
   useNewCollectionField(e){
     e.preventDefault();
-    this.props.useNewCollectionField();
-    this.props.updateSaveFormField({selectedCollection: ""})
+    this.props.actions.useNewCollectionField();
+    this.props.actions.updateSaveFormField({selectedCollection: ""})
   }
 
   useExistingCollection(e){
     e.preventDefault();
-    this.props.useExistingCollectionField();
-    this.props.updateSaveFormField({newCollectionName: ""})
+    this.props.actions.useExistingCollectionField();
+    this.props.actions.updateSaveFormField({newCollectionName: ""})
   }
 
   updateSaveFormField(e){
     e.preventDefault();
-    this.props.updateSaveFormField({[e.target.name]: e.target.value})
+    this.props.actions.updateSaveFormField({[e.target.name]: e.target.value})
   }
 
   save(e){
@@ -42,7 +42,7 @@ export default class SaveForm extends Component{
     if(this.props.newCollection){
       this.props.createNewCollection(this.props.form.newCollectionName, this.props.form.templateName);
     } else{
-      this.props.addTemplateToCollection(this.props.form.selectedCollection, this.props.form.templateName);
+      this.props.actions.addTemplateToCollection(this.props.form.selectedCollection, this.props.form.templateName);
     }
   }
 
@@ -101,7 +101,7 @@ export default class SaveForm extends Component{
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Save Template</p>
-            <button className="delete" onClick={this.deactivate}></button>
+            <button className="delete" onClick={this.props.actions.closeSaveForm}></button>
           </header>
 
           <section className="modal-card-body">
@@ -118,7 +118,7 @@ export default class SaveForm extends Component{
 
           <footer className="modal-card-foot">
             <a className="button is-primary" onClick={this.save}>Save</a>
-            <a className="button" onClick={this.deactivate}>Cancel</a>
+            <a className="button" onClick={this.props.actions.closeSaveForm}>Cancel</a>
           </footer>
         </div>
       </div>

@@ -17,7 +17,7 @@ export default class SaveForm extends Component{
   }
   deactivate(e){
     e.preventDefault();
-    this.props.deactivate();
+    this.props.actions.closeSaveForm();
   }
 
   useNewCollectionField(e){
@@ -77,7 +77,6 @@ export default class SaveForm extends Component{
   }
 
   flashMessage(){
-    console.log(this.props.form);
     if(this.props.form.result === ProducerConst.saveForm.result['failed']){
       return(
         <article className="message is-danger">
@@ -118,7 +117,7 @@ export default class SaveForm extends Component{
 
           <footer className="modal-card-foot">
             <a className="button is-primary" onClick={this.save}>Save</a>
-            <a className="button" onClick={this.props.actions.closeSaveForm}>Cancel</a>
+            <a className="button" onClick={this.deactivate}>Cancel</a>
           </footer>
         </div>
       </div>

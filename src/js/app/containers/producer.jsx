@@ -20,10 +20,11 @@ class Producer extends Component{
     this.renderResultMessage = this.renderResultMessage.bind(this);
     // container logic
     this.createCollectionSaveForm = this.createCollectionSaveForm.bind(this);
-    this.addTemplateSaveForm = this.addTemplateSaveForm.bind(this);
+    this.addTemplateSaveForm    = this.addTemplateSaveForm.bind(this);
+    // action
     this.producerSaveFormAction = bindActionCreators(ProducerSaveFormAction, props.dispatch);
-    this.producerFormAction = bindActionCreators(ProducerFormAction, props.dispatch);
-    this.ProducerRouteAction = bindActionCreators(ProducerRouteAction, props.dispatch);
+    this.producerFormAction     = bindActionCreators(ProducerFormAction, props.dispatch);
+    this.ProducerRouteAction    = bindActionCreators(ProducerRouteAction, props.dispatch);
   }
 
   // container logic
@@ -65,7 +66,7 @@ class Producer extends Component{
       <div className="columns">
         <div className="column is-4 is-container-vertical-scrollable">
           <SubNav subRoute={this.props.subRoute} actions={this.ProducerRouteAction} changeProducerSubRoute={this.props.changeProducerSubRoute}>
-            <History histories={this.props.histories} onClickHistory={this.props.updateForm} subRouteName={ProducerConst.subRoute.history} subNavName={"Histories"}/>
+            <History histories={this.props.histories} onClickHistory={this.producerFormAction.updateProducerForm} subRouteName={ProducerConst.subRoute.history} subNavName={"Histories"}/>
             <Collection subRouteName={ProducerConst.subRoute.collection} collections={this.props.collections} subNavName={"Collections"}/>
           </SubNav>
         </div>
@@ -74,7 +75,6 @@ class Producer extends Component{
             <p className="subtitle is-5">&nbsp;</p> {/* this is for title*/}
             <Form
               actions={this.producerFormAction}
-              onChange={this.props.updateForm}
               params={this.props.producerForm}
 
               isSending={this.props.producerForm.status === 'sending'}

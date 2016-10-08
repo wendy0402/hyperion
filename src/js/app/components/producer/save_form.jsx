@@ -4,10 +4,6 @@ import { ProducerConst } from '../../constants/producer_const'
 export default class SaveForm extends Component{
   constructor(props){
     super(props);
-    this.state = {
-      newCollection: false
-    }
-
     this.deactivate = this.deactivate.bind(this);
     this.useNewCollectionField = this.useNewCollectionField.bind(this);
     this.useExistingCollection = this.useExistingCollection.bind(this);

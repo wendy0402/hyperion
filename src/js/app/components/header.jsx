@@ -14,7 +14,6 @@ export default class Header extends Component{
             <div className="container">
               <ul>
                 <li className="is-active"><a>Producer</a></li>
-                <li><a>Modifiers</a></li>
               </ul>
             </div>
           </nav>

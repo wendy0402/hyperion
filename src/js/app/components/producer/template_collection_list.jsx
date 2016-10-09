@@ -9,7 +9,12 @@ export default class TemplateCollectionList extends Component{
   renderTemplates(){
     return this.props.templates.map((template) => {
       const handleClickTemplate = (e) => {
-        this.props.onClickTemplate(template);
+        this.props.onClickTemplate({
+          message: template.message,
+          partition: template.partition,
+          topic: template.topic,
+          url: template.url
+        });
       }
 
       return (

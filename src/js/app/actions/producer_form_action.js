@@ -4,16 +4,9 @@ import { ProducerConst } from '../constants/producer_const'
 const kafka = window.nodeRequire('no-kafka');
 
 export function updateProducerForm(params){
-  let partition = parseInt(params.partition);
-  if(partition === NaN) { partition = 0};
   return {
     type: UPDATE_PRODUCER_FORM,
-    params: {
-      url: params.url,
-      message: params.message,
-      topic: params.topic,
-      partition: partition
-    }
+    params
   }
 }
 

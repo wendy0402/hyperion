@@ -1,7 +1,7 @@
 import { arrayModelToObj } from '../util'
 import { TemplateCollection } from '../model/template_collection'
 import { Template } from '../model/template'
-import {UPDATE_COLLECTIONS, UPDATE_TEMPLATE_COLLECTIONS} from '../constants/action_types'
+import {UPDATE_COLLECTIONS, UPDATE_TEMPLATE_COLLECTIONS, REFRESH_COLLECTION} from '../constants/action_types'
 export function initializeCollection(){
   return (dispatch) => { fetchAllCollection(dispatch) }
 }
@@ -16,6 +16,12 @@ export function fetchTemplatesWithCollection(id) {
       }
       dispatch(payload);
     });
+  }
+}
+
+export function refreshCollection(){
+  return {
+    type: REFRESH_COLLECTION,
   }
 }
 

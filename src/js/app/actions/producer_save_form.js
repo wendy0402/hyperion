@@ -11,6 +11,7 @@ import { TemplateCollection } from '../model/template_collection'
 import { Template } from '../model/template'
 import { arrayModelToObj } from '../util'
 import { ProducerConst } from '../constants/producer_const'
+import { refreshCollection } from './producer_collection'
 export function closeSaveForm(){
   return({
     type: CLOSE_SAVE_FORM
@@ -51,6 +52,7 @@ export function addTemplateToCollection(collectionID, templateParams){
     .then((id) =>{
       dispatch({ type: CREATE_COLLECTION, result: ProducerConst.saveForm.result['success'], resultMessage: "success to store"});
       dispatch(updateSaveFormField({selectedCollection: "", newCollectionName: "", templateName: ""}))
+      dispatch(refreshCollection());
       dispatch(closeSaveForm());
     })
     .catch((e)=>{

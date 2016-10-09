@@ -1,21 +1,29 @@
-import { Collection } from '../model/history'
 import { arrayModelToObj } from '../util'
-export function initializeHistory(){
-  return (dispatch) => { fetchAllHistories(dispatch) }
+import { TemplateCollection } from '../model/template_collection'
+import { Template } from '../model/template'
+import {UPDATE_COLLECTIONS, UPDATE_TEMPLATE_COLLECTIONS} from '../constants/action_types'
+export function initializeCollection(){
+  return (dispatch) => { fetchAllCollection(dispatch) }
 }
 
-export function openCollection(){
-  return(
-    (dispatch) =>{
-      TemplateCollection.fetchAll((templateCollections) =>{
-        dispatch({
-          type: UPDATE_COLLECTIONS,
-          templateCollections: arrayModelToObj(templateCollections)
-        });
-        dispatch({
-          type: OPEN_COLLECTION
-        })
-      });
-    }
-  );
+export function fetchTemplatesWithCollection(id) {
+  return (dispatch) => {
+    return Template.findByCollectionIds([id], (templates) => {
+      let payload = {
+        type: UPDATE_TEMPLATE_COLLECTIONS,
+        templates: arrayModelToObj(templates),
+        templateCollectionId: id
+      }
+      dispatch(payload);
+    });
+  }
+}
+
+function fetchAllCollection(dispatch){
+  return TemplateCollection.fetchAll((templateCollections) => {
+    dispatch({
+      type: UPDATE_COLLECTIONS,
+      templateCollections: arrayModelToObj(templateCollections)
+    });
+  });
 }

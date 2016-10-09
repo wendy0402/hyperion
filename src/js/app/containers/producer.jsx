@@ -13,7 +13,11 @@ import Collection from '../components/producer/collection'
 import * as ProducerFormAction from '../actions/producer_form_action'
 import * as ProducerRouteAction from '../actions/producer_route'
 import * as ProducerSaveFormAction from '../actions/producer_save_form'
+import * as ProducerCollectionAction from '../actions/producer_collection'
+
 import { initializeHistory } from '../actions/producer_history'
+
+
 class Producer extends Component{
   constructor(props){
     super(props);
@@ -22,9 +26,10 @@ class Producer extends Component{
     this.createCollectionSaveForm = this.createCollectionSaveForm.bind(this);
     this.addTemplateSaveForm    = this.addTemplateSaveForm.bind(this);
     // action
-    this.producerSaveFormAction = bindActionCreators(ProducerSaveFormAction, props.dispatch);
-    this.producerFormAction     = bindActionCreators(ProducerFormAction, props.dispatch);
-    this.ProducerRouteAction    = bindActionCreators(ProducerRouteAction, props.dispatch);
+    this.producerSaveFormAction       = bindActionCreators(ProducerSaveFormAction, props.dispatch);
+    this.producerFormAction           = bindActionCreators(ProducerFormAction, props.dispatch);
+    this.ProducerRouteAction          = bindActionCreators(ProducerRouteAction, props.dispatch);
+    this.ProducerCollectionAction    = bindActionCreators(ProducerCollectionAction, props.dispatch);
   }
 
   // container logic
@@ -74,6 +79,7 @@ class Producer extends Component{
               subNavName="Histories"/>
             <Collection
               collections={this.props.collections}
+              actions={this.ProducerCollectionAction}
               subRouteName={ProducerConst.subRoute.collection}
               subNavName="Collections"/>
           </SubNav>

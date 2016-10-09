@@ -2,39 +2,53 @@ import React, { Component } from 'react'
 export default class Collection extends Component{
   constructor(props){
     super(props);
+    this.renderCollection = this.renderCollection.bind(this);
+    this.groupTemplatesByCollection = this.groupTemplatesByCollection.bind(this);
   }
 
-  onClickHistory(e){
-    e.preventDefault();
-    let id = e.target.dataset.id
-    let history = this.props.histories[id];
-    if(typeof history === "object") {
-      this.props.onClickHistory({
-        url: history.url,
-        topic: history.topic,
-        partition: history.partition,
-        message: history.message
-      });
-    }
+  componentDidMount(){
+    this.props.actions.initializeCollection();
   }
-  renderCollection(){
-    this.props.collection.each((item) => {
-
+  groupTemplatesByCollection(){
+    let groupedTemplates = {}
+    Object.keys(this.props.collections.templates).forEach((id) => {
+      let template = this.props.collections.templates[id];
+      if(groupedTemplates[template.collection_id] === undefined){
+        groupedTemplates[template.collection_id] = []
+      }
+      groupedTemplates[template.collection_id].push(template)
     })
+    return groupedTemplates;
+  }
+
+  renderCollection(){
+    let templates = this.groupTemplatesByCollection();
+
+    let templateCollections = this.props.collections.templateCollections;
+
+    return Object.keys(templateCollections).map((id) => {
+      let collection = templateCollections[id]
+      const handleClick = (e) => {
+        this.props.actions.fetchTemplatesWithCollection(id);
+      }
+
+      let templateDoms = (templates[id] || []).map((template) =>{
+        return <li key={template.id}><a>{template.name}</a></li>
+      });
+      return(
+        <li key={id} onClick={handleClick}>
+          <a>{collection.name}</a>
+          <ul> {templateDoms} </ul>
+        </li>
+      );
+    });
   }
 
   render(){
     return(
       <aside className="menu">
         <ul className="menu-list">
-          <li>
-            <a className="is-active" href="#">Manage Your Team</a>
-            <ul>
-              <li><a href="#">Members</a></li>
-              <li><a href="#">Plugins</a></li>
-              <li><a href="#">Add a member</a></li>
-            </ul>
-          </li>
+          {this.renderCollection()}
         </ul>
       </aside>
     );

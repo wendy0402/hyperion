@@ -66,8 +66,15 @@ class Producer extends Component{
       <div className="columns">
         <div className="column is-4 is-container-vertical-scrollable">
           <SubNav subRoute={this.props.subRoute} actions={this.ProducerRouteAction} changeProducerSubRoute={this.props.changeProducerSubRoute}>
-            <History histories={this.props.histories} onClickHistory={this.producerFormAction.updateProducerForm} subRouteName={ProducerConst.subRoute.history} subNavName={"Histories"}/>
-            <Collection subRouteName={ProducerConst.subRoute.collection} collections={this.props.collections} subNavName={"Collections"}/>
+            <History
+              histories={this.props.histories}
+              onClickHistory={this.producerFormAction.updateProducerForm}
+              subRouteName={ProducerConst.subRoute.history}
+              subNavName="Histories"/>
+            <Collection
+              subRouteName={ProducerConst.subRoute.collection}
+              collections={this.props.collections}
+              subNavName="Collections"/>
           </SubNav>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">

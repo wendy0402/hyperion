@@ -38,7 +38,7 @@ export default class SaveForm extends Component{
     if(this.props.newCollection){
       this.props.createNewCollection(this.props.form.newCollectionName, this.props.form.templateName);
     } else{
-      this.props.actions.addTemplateToCollection(this.props.form.selectedCollection, this.props.form.templateName);
+      this.props.addTemplateToCollection(this.props.form.selectedCollection, this.props.form.templateName);
     }
   }
 

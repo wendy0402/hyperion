@@ -22,7 +22,6 @@ class TemplateModel{
   };
 
   findByCollectionIds(collectionIds, callback){
-    console.log(collectionIds);
     return this.conn.filter((template) => {
       let collectionID = template.collection_id ? template.collection_id.toString() : "";
       return collectionIds.indexOf(collectionID) != -1;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TemplateCollectionList from './template_collection_list'
 export default class Collection extends Component{
   constructor(props){
     super(props);
@@ -31,15 +32,8 @@ export default class Collection extends Component{
       const handleClick = (e) => {
         this.props.actions.fetchTemplatesWithCollection(id);
       }
-
-      let templateDoms = (templates[id] || []).map((template) =>{
-        return <li key={template.id}><a>{template.name}</a></li>
-      });
       return(
-        <li key={id} onClick={handleClick}>
-          <a>{collection.name}</a>
-          <ul> {templateDoms} </ul>
-        </li>
+        <TemplateCollectionList onClick={handleClick} templates={templates[id] || []} name={collection.name} />
       );
     });
   }

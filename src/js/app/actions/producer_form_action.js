@@ -15,12 +15,14 @@ export function sendMessage(params){
   //code mirror use ↵ to replace newline
   params.message = params.message.replace(/↵/g, '\n');
   let producer = new kafka.Producer({connectionString: params.url});
+  let partition = parseInt(params.partition);
+  if(partition === NaN) { partition = 0};
   return (dispatch) => {
     let paramsPayload = {
       url: params.url,
       message: params.message,
       topic: params.topic,
-      partition: params.partition
+      partition: partition
     }
     dispatch(sendingMessageOnProgress(paramsPayload)); // message on progress
     dispatch(addHistory(paramsPayload));

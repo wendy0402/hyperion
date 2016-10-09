@@ -33,7 +33,12 @@ export default class Collection extends Component{
         this.props.actions.fetchTemplatesWithCollection(id);
       }
       return(
-        <TemplateCollectionList onClick={handleClick} templates={templates[id] || []} name={collection.name} />
+        <TemplateCollectionList
+          key={id}
+          onClick={handleClick}
+          templates={templates[id] || []}
+          name={collection.name}
+          onClickTemplate={this.props.onClickTemplate}/>
       );
     });
   }

@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 
-export default class TemplateCollectionList{
+export default class TemplateCollectionList extends Component{
   constructor(props){
     super(props)
     this.renderTemplates = this.renderTemplates.bind(this);
@@ -8,8 +8,12 @@ export default class TemplateCollectionList{
 
   renderTemplates(){
     return this.props.templates.map((template) => {
+      const handleClickTemplate = (e) => {
+        this.props.onClickTemplate(template);
+      }
+
       return (
-        <li key={template.id}>
+        <li key={template.id} onClick={handleClickTemplate}>
           <a>{template.name}</a>
         </li>
       );
@@ -18,8 +22,8 @@ export default class TemplateCollectionList{
 
   render(){
     return(
-      <li key={id} onClick={this.props.handleClick}>
-        <a href="#">{this.props.name}</a>
+      <li onClick={this.props.onClick}>
+        <a>{this.props.name}</a>
         <ul> {this.renderTemplates()} </ul>
       </li>
     );

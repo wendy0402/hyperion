@@ -81,6 +81,7 @@ class Producer extends Component{
               collections={this.props.collections}
               actions={this.ProducerCollectionAction}
               subRouteName={ProducerConst.subRoute.collection}
+              onClickTemplate={this.producerFormAction.updateProducerForm}
               subNavName="Collections"/>
           </SubNav>
         </div>

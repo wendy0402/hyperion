@@ -13,7 +13,7 @@ import Collection from '../components/producer/collection'
 import * as ProducerFormAction from '../actions/producer_form_action'
 import * as ProducerRouteAction from '../actions/producer_route'
 import * as ProducerSaveFormAction from '../actions/producer_save_form'
-
+import { initializeHistory } from '../actions/producer_history'
 class Producer extends Component{
   constructor(props){
     super(props);
@@ -70,10 +70,11 @@ class Producer extends Component{
               histories={this.props.histories}
               onClickHistory={this.producerFormAction.updateProducerForm}
               subRouteName={ProducerConst.subRoute.history}
+              onActive={() => { this.props.dispatch(initializeHistory()) } }
               subNavName="Histories"/>
             <Collection
-              subRouteName={ProducerConst.subRoute.collection}
               collections={this.props.collections}
+              subRouteName={ProducerConst.subRoute.collection}
               subNavName="Collections"/>
           </SubNav>
         </div>

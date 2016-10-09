@@ -6,6 +6,10 @@ export default class History extends Component{
     this.onClickHistory = this.onClickHistory.bind(this)
   }
 
+  componentDidMount(){
+    this.props.onActive();
+  }
+
   onClickHistory(e){
     e.preventDefault();
     let id = e.target.dataset.id

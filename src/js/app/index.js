@@ -6,7 +6,6 @@ import App from './containers/app'
 import { History } from './model/history'
 import { initializeHistory } from './actions/producer_history'
 
-History.fetchAll((histories) => { arthurStore.dispatch(initializeHistory()) })
 render(
   <Provider store={arthurStore}>
     <App />

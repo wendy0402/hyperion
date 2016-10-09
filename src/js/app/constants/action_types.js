@@ -18,6 +18,8 @@ export const SUBMIT_SAVE_FORM           = 'SUBMIT_SAVE_FORM';
 // producer collection
 export const CREATE_COLLECTION          = 'CREATE_COLLECTION';
 export const UPDATE_COLLECTIONS         = 'UPDATE_COLLECTIONS';
-export const CHANGE_SUBROUTE  = 'CHANGE_SUBROUTE'
 export const UPDATE_TEMPLATE_COLLECTIONS = 'UPDATE_TEMPLATE_COLLECTIONS';
 export const REFRESH_COLLECTION  = 'REFRESH_COLLECTION'
+
+// producer subroute
+export const CHANGE_SUBROUTE  = 'CHANGE_SUBROUTE'

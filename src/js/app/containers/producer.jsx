@@ -10,7 +10,6 @@ import SubNav from '../components/producer/sub_nav'
 import SaveForm from '../components/producer/save_form'
 import Collection from '../components/producer/collection'
 
-import * as ProducerFormAction from '../actions/producer_form_action'
 import * as ProducerRouteAction from '../actions/producer_route'
 import * as ProducerSaveFormAction from '../actions/producer_save_form'
 import * as ProducerCollectionAction from '../actions/producer_collection'
@@ -27,7 +26,6 @@ class Producer extends Component{
     this.addTemplateSaveForm    = this.addTemplateSaveForm.bind(this);
     // action
     this.producerSaveFormAction       = bindActionCreators(ProducerSaveFormAction, props.dispatch);
-    this.producerFormAction           = bindActionCreators(ProducerFormAction, props.dispatch);
     this.ProducerRouteAction          = bindActionCreators(ProducerRouteAction, props.dispatch);
     this.ProducerCollectionAction    = bindActionCreators(ProducerCollectionAction, props.dispatch);
   }
@@ -88,13 +86,7 @@ class Producer extends Component{
         <div className="column is-6 is-container-vertical-scrollable">
           <div className= "content">
             <p className="subtitle is-5">&nbsp;</p> {/* this is for title*/}
-            <Form
-              actions={this.producerFormAction}
-              params={this.props.producerForm}
-
-              isSending={this.props.producerForm.status === 'sending'}
-              onClickSave={this.producerSaveFormAction.openSaveForm}
-            />
+            <Form />
           </div>
           {this.renderResultMessage()}
         </div>
@@ -115,7 +107,6 @@ class Producer extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    producerForm: state.producerForm,
     histories: state.producerHistory.histories,
     subRoute: state.producerRoute.subRoute,
     saveForm: state.producerSaveForm,

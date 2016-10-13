@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import CodeTextArea from './code_text_area'
 import { ProducerConst } from '../../constants/producer_const'
-export default class Form extends Component{
+import * as Action from '../../actions/producer_form_action'
+import {openSaveForm} from '../../actions/producer_save_form'
+import {connect} from 'react-redux'
+class Form extends Component{
   constructor(props){
     super(props)
     this.updateForm = this.updateForm.bind(this);
@@ -11,52 +14,57 @@ export default class Form extends Component{
   }
 
   updateForm(e){
-    this.props.actions.updateProducerForm({[e.target.name]: e.target.value});
+    this.props.dispatch(Action.updateProducerForm({[e.target.name]: e.target.value}));
   }
 
   submitForm(e){
     e.preventDefault();
-    this.props.actions.sendMessage(this.props.params);
+    this.props.dispatch(Action.sendMessage({
+      url: props.url,
+      topic: props.topic,
+      partition: props.partition,
+      message: props.message
+    }));
   }
 
   resetForm(e){
     e.preventDefault();
-    this.props.actions.updateProducerForm({
+    this.props.dispatch(Action.updateProducerForm({
       url: '',
       topic: '',
       message: '',
       partition: 0,
       status: ProducerConst.form.status.idle
-    });
+    }));
   }
 
   openSaveForm(e){
     e.preventDefault();
-    this.props.onClickSave();
+    this.props.dispatch(openSaveForm());
   }
 
   render(){
     return(
       <form onSubmit={this.submitForm}>
         <p className="control">
-          <input className="input" type="text" name="url" placeholder="Enter kafka URL here" onChange={this.updateForm} value={this.props.params.url}/>
+          <input className="input" type="text" name="url" placeholder="Enter kafka URL here" onChange={this.updateForm} value={this.props.url}/>
         </p>
         <div className="control is-horizontal">
           <div className="control is-grouped">
             <p className="control is-expanded">
-              <input className="input" type="text" name="topic" placeholder="Topic" onChange={this.updateForm} value={this.props.params.topic}/>
+              <input className="input" type="text" name="topic" placeholder="Topic" onChange={this.updateForm} value={this.props.topic}/>
             </p>
             <p className="control">
-              <input className="input" type="number" name="partition" placeholder="Partition" onChange={this.updateForm} value={this.props.params.partition}/>
+              <input className="input" type="number" name="partition" placeholder="Partition" onChange={this.updateForm} value={this.props.partition}/>
             </p>
           </div>
         </div>
 
         <div className="control">
-          <CodeTextArea codemirrorId="codemirror-text" textAreaName="message" className="textarea"  onChange={this.updateForm} value={this.props.params.message}/>
+          <CodeTextArea codemirrorId="codemirror-text" textAreaName="message" className="textarea"  onChange={this.updateForm} value={this.props.message}/>
         </div>
         <div className="control">
-            <button className="button is-primary" type="submit" disabled={this.props.isSending}>{this.props.isSending ? 'Sending...' : 'Send'}</button>
+            <button className="button is-primary" type="submit" disabled={this.props.isSending}>{this.props.status === 'sending' ? 'Sending...' : 'Send'}</button>
             <button className="button is-danger" onClick={this.resetForm} disabled={this.props.isSending}>Reset</button>
             <button className="button is-info" onClick={this.openSaveForm}>Save</button>
         </div>
@@ -64,3 +72,12 @@ export default class Form extends Component{
     );
   }
 }
+export default connect((state) => {
+  return {
+    url: state.producerForm.url,
+    topic: state.producerForm.topic,
+    partition: state.producerForm.partition,
+    message: state.producerForm.message,
+    status: state.producerForm.status
+  }
+})(Form);

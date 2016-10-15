@@ -6,16 +6,12 @@ import {closeSaveForm, useNewCollectionField, useExistingCollectionField, update
 class SaveForm extends Component{
   constructor(props){
     super(props);
-    this.deactivate = this.deactivate.bind(this);
+
     this.useNewCollectionField = this.useNewCollectionField.bind(this);
     this.useExistingCollection = this.useExistingCollection.bind(this);
     this.updateSaveFormField = this.updateSaveFormField.bind(this);
     this.save = this.save.bind(this);
     this.flashMessage = this.flashMessage.bind(this);
-  }
-  deactivate(e){
-    e.preventDefault();
-    this.props.closeSaveForm();
   }
 
   useNewCollectionField(e){
@@ -94,7 +90,7 @@ class SaveForm extends Component{
 
     return(
       <div className={modalClassName}>
-        <div className="modal-background" onClick={this.deactivate}></div>
+        <div className="modal-background" onClick={this.props.closeSaveForm}></div>
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Save Template</p>
@@ -115,7 +111,7 @@ class SaveForm extends Component{
 
           <footer className="modal-card-foot">
             <a className="button is-primary" onClick={this.save}>Save</a>
-            <a className="button" onClick={this.deactivate}>Cancel</a>
+            <a className="button" onClick={this.props.closeSaveForm}>Cancel</a>
           </footer>
         </div>
       </div>

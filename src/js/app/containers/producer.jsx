@@ -83,8 +83,7 @@ class Producer extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    producerForm: state.producerForm,
-    collections: state.producerCollection
+    producerForm: state.producerForm
   };
 }
 

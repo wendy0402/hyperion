@@ -1,6 +1,6 @@
 import {CHANGE_SUBROUTE} from '../constants/action_types'
 const initialState = {
-  subRoute: 'collection'
+  subRoute: 'Collection'
 }
 export default function producerRoute(state=initialState, action){
   switch(action.type){

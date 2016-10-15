@@ -23,7 +23,8 @@ export default class SubNav extends Component{
     var currentSubNode = null;
 
     for(const childNode of this.childrenNodes()) {
-      if(childNode.props.subRouteName === this.props.subRoute){
+      let displayName = this.getDisplayName(childNode);
+      if(this.props.subRoute === displayName){
         currentSubNode = childNode;
         break;
       }
@@ -31,20 +32,24 @@ export default class SubNav extends Component{
     return currentSubNode
   }
 
+  getDisplayName(Component) {
+    return Component.displayName || Component.name || Component.type.displayName || Component.type.name || 'Component';
+  }
+
+
   renderNavLink(){
     return this.childrenNodes().map((childNode) => {
-      let subRouteName = childNode.props.subRouteName;
+      let displayName = this.getDisplayName(childNode);
       let liClassName = classNames({
-        "is-active": this.props.subRoute === subRouteName
+        "is-active": this.props.subRoute === displayName
       });
       let onClick = (e) => {
-        e.preventDefault();
-        this.props.actions.changeProducerSubRoute(subRouteName);
+        this.props.actions.changeProducerSubRoute(displayName);
       };
-
-      return (<li key={subRouteName} className={liClassName} onClick={onClick}><a>{childNode.props.subNavName}</a></li>);
+      return (<li key={displayName} className={liClassName} onClick={onClick}><a>{displayName}</a></li>);
     });
   }
+
   render(){
     return(
       <div>

@@ -11,8 +11,8 @@ export const ProducerConst = {
     }
   },
   subRoute: {
-    history: 'history',
-    collection: 'collection'
+    history: 'History',
+    collection: 'Collection'
   },
   saveForm: {
     result: {

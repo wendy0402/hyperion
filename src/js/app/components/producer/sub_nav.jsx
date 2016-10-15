@@ -3,23 +3,20 @@ import {bindActionCreators} from 'redux'
 import History from './history'
 import classNames from 'classnames'
 import { ProducerConst } from '../../constants/producer_const'
-import * as ProducerRoute from '../../actions/producer_route'
 
 export default class SubNav extends Component{
   constructor(props){
     super(props);
-    this.currentSubRoute = this.currentSubRoute.bind(this);
+    this.renderCurrentSubMenu = this.renderCurrentSubMenu.bind(this);
     this.childrenNodes = this.childrenNodes.bind(this);
     this.renderNavLink = this.renderNavLink.bind(this);
-    this.actions = bindActionCreators(ProducerRoute, this.props.dispatch);
-
   }
 
   childrenNodes(){
     return Array.isArray(this.props.children) ? this.props.children : [this.props.children];
   }
 
-  currentSubRoute(){
+  renderCurrentSubMenu(){
     var currentSubNode = null;
 
     for(const childNode of this.childrenNodes()) {
@@ -58,7 +55,7 @@ export default class SubNav extends Component{
             {this.renderNavLink()}
           </ul>
         </div>
-        {this.currentSubRoute()}
+        {this.renderCurrentSubMenu()}
       </div>
     );
   }

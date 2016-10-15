@@ -8,7 +8,7 @@ export default class Collection extends Component{
   }
 
   componentDidMount(){
-    this.props.actions.initializeCollection();
+    this.props.onActive();
   }
   groupTemplatesByCollection(){
     let groupedTemplates = {}
@@ -30,7 +30,7 @@ export default class Collection extends Component{
     return Object.keys(templateCollections).map((id) => {
       let collection = templateCollections[id]
       const handleClick = (e) => {
-        this.props.actions.fetchTemplatesWithCollection(id);
+        this.props.onClickCollection(id);
       }
       return(
         <TemplateCollectionList

@@ -44,7 +44,7 @@ export default class SubNav extends Component{
         "is-active": this.props.subRoute === displayName
       });
       let onClick = (e) => {
-        this.props.actions.changeProducerSubRoute(displayName);
+        this.props.changeProducerSubRoute(displayName);
       };
       return (<li key={displayName} className={liClassName} onClick={onClick}><a>{displayName}</a></li>);
     });

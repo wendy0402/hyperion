@@ -3,16 +3,14 @@ import {bindActionCreators} from 'redux'
 import { connect } from 'react-redux'
 import { ProducerConst } from '../constants/producer_const'
 
-import History from '../components/producer/history'
 import Form from '../components/producer/form'
 import Result from '../components/producer/result'
-import SubNav from '../components/producer/sub_nav'
-import SaveForm from '../components/producer/save_form'
-import Collection from '../components/producer/collection'
 
-import * as ProducerRouteAction from '../actions/producer_route'
+import SaveForm from '../components/producer/save_form'
+import SideMenuRouter from '../components/producer/side_menu_router'
+
+import * as ProducerFormAction from '../actions/producer_form_action'
 import * as ProducerSaveFormAction from '../actions/producer_save_form'
-import * as ProducerCollectionAction from '../actions/producer_collection'
 
 import { initializeHistory } from '../actions/producer_history'
 
@@ -26,8 +24,7 @@ class Producer extends Component{
     this.addTemplateSaveForm    = this.addTemplateSaveForm.bind(this);
     // action
     this.producerSaveFormAction       = bindActionCreators(ProducerSaveFormAction, props.dispatch);
-    this.ProducerRouteAction          = bindActionCreators(ProducerRouteAction, props.dispatch);
-    this.ProducerCollectionAction    = bindActionCreators(ProducerCollectionAction, props.dispatch);
+    this.producerFormAction           = bindActionCreators(ProducerFormAction, props.dispatch);
   }
 
   // container logic
@@ -68,20 +65,7 @@ class Producer extends Component{
     return(
       <div className="columns">
         <div className="column is-4 is-container-vertical-scrollable">
-          <SubNav subRoute={this.props.subRoute} actions={this.ProducerRouteAction} changeProducerSubRoute={this.props.changeProducerSubRoute}>
-            <History
-              histories={this.props.histories}
-              onClickHistory={this.producerFormAction.updateProducerForm}
-              subRouteName={ProducerConst.subRoute.history}
-              onActive={() => { this.props.dispatch(initializeHistory()) } }
-              subNavName="Histories"/>
-            <Collection
-              collections={this.props.collections}
-              actions={this.ProducerCollectionAction}
-              subRouteName={ProducerConst.subRoute.collection}
-              onClickTemplate={this.producerFormAction.updateProducerForm}
-              subNavName="Collections"/>
-          </SubNav>
+          <SideMenuRouter/>
         </div>
         <div className="column is-6 is-container-vertical-scrollable">
           <div className= "content">
@@ -107,8 +91,7 @@ class Producer extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    histories: state.producerHistory.histories,
-    subRoute: state.producerRoute.subRoute,
+    producerForm: state.producerForm,
     saveForm: state.producerSaveForm,
     collections: state.producerCollection
   };

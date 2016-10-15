@@ -9,7 +9,6 @@ import Result from '../components/producer/result'
 import SaveForm from '../components/producer/save_form'
 import SideMenuRouter from '../components/producer/side_menu_router'
 
-import * as ProducerFormAction from '../actions/producer_form_action'
 import * as ProducerSaveFormAction from '../actions/producer_save_form'
 
 import { initializeHistory } from '../actions/producer_history'
@@ -24,7 +23,6 @@ class Producer extends Component{
     this.addTemplateSaveForm    = this.addTemplateSaveForm.bind(this);
     // action
     this.producerSaveFormAction       = bindActionCreators(ProducerSaveFormAction, props.dispatch);
-    this.producerFormAction           = bindActionCreators(ProducerFormAction, props.dispatch);
   }
 
   // container logic
@@ -75,12 +73,6 @@ class Producer extends Component{
           {this.renderResultMessage()}
         </div>
         <SaveForm
-          active={this.props.saveForm.active}
-          form={this.props.saveForm.form}
-          newCollection={this.props.saveForm.newCollection}
-          actions={this.producerSaveFormAction}
-
-          templateCollections={this.props.collections.templateCollections}
           createNewCollection={this.createCollectionSaveForm}
           addTemplateToCollection={this.addTemplateSaveForm}
         />
@@ -92,7 +84,6 @@ class Producer extends Component{
 const mapStateToProps = (state) => {
   return {
     producerForm: state.producerForm,
-    saveForm: state.producerSaveForm,
     collections: state.producerCollection
   };
 }

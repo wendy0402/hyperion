@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
+import {connect} from 'react-redux'
 import { ProducerConst } from '../../constants/producer_const'
-export default class SaveForm extends Component{
+import {closeSaveForm, useNewCollectionField, useExistingCollectionField, updateSaveFormField} from '../../actions/producer_save_form'
+class SaveForm extends Component{
   constructor(props){
     super(props);
     this.deactivate = this.deactivate.bind(this);
@@ -13,24 +15,24 @@ export default class SaveForm extends Component{
   }
   deactivate(e){
     e.preventDefault();
-    this.props.actions.closeSaveForm();
+    this.props.closeSaveForm();
   }
 
   useNewCollectionField(e){
     e.preventDefault();
-    this.props.actions.useNewCollectionField();
-    this.props.actions.updateSaveFormField({selectedCollection: ""})
+    this.props.useNewCollectionField();
+    this.props.updateSaveFormField({selectedCollection: ""})
   }
 
   useExistingCollection(e){
     e.preventDefault();
-    this.props.actions.useExistingCollectionField();
-    this.props.actions.updateSaveFormField({newCollectionName: ""})
+    this.props.useExistingCollectionField();
+    this.props.updateSaveFormField({newCollectionName: ""})
   }
 
   updateSaveFormField(e){
     e.preventDefault();
-    this.props.actions.updateSaveFormField({[e.target.name]: e.target.value})
+    this.props.updateSaveFormField({[e.target.name]: e.target.value})
   }
 
   save(e){
@@ -96,7 +98,7 @@ export default class SaveForm extends Component{
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Save Template</p>
-            <button className="delete" onClick={this.props.actions.closeSaveForm}></button>
+            <button className="delete" onClick={this.props.closeSaveForm}></button>
           </header>
 
           <section className="modal-card-body">
@@ -120,3 +122,21 @@ export default class SaveForm extends Component{
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    form: state.producerSaveForm.form,
+    templateCollections: state.producerCollection.templateCollections,
+    newCollection: state.producerSaveForm.newCollection,
+    active: state.producerSaveForm.active
+  };
+}
+
+const mapDispatchToProps = {
+  closeSaveForm,
+  updateSaveFormField,
+  useNewCollectionField,
+  useExistingCollectionField
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SaveForm);

@@ -20,10 +20,10 @@ class Form extends Component{
   submitForm(e){
     e.preventDefault();
     this.props.dispatch(Action.sendMessage({
-      url: props.url,
-      topic: props.topic,
-      partition: props.partition,
-      message: props.message
+      url: this.props.url,
+      topic: this.props.topic,
+      partition: this.props.partition,
+      message: this.props.message
     }));
   }
 

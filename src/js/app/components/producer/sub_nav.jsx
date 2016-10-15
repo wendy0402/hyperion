@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {bindActionCreators} from 'redux'
 import History from './history'
 import classNames from 'classnames'
 import { ProducerConst } from '../../constants/producer_const'

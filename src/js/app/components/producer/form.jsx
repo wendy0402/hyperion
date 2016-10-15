@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import CodeTextArea from './code_text_area'
 import { ProducerConst } from '../../constants/producer_const'
-import * as Action from '../../actions/producer_form_action'
+import {sendMessage, updateProducerForm} from '../../actions/producer_form_action'
 import {openSaveForm} from '../../actions/producer_save_form'
 import {connect} from 'react-redux'
 class Form extends Component{
@@ -14,33 +14,33 @@ class Form extends Component{
   }
 
   updateForm(e){
-    this.props.dispatch(Action.updateProducerForm({[e.target.name]: e.target.value}));
+    this.props.handleUpdateForm({[e.target.name]: e.target.value});
   }
 
   submitForm(e){
     e.preventDefault();
-    this.props.dispatch(Action.sendMessage({
+    this.props.handleSubmit({
       url: this.props.url,
       topic: this.props.topic,
       partition: this.props.partition,
       message: this.props.message
-    }));
+    });
   }
 
   resetForm(e){
     e.preventDefault();
-    this.props.dispatch(Action.updateProducerForm({
+    this.props.handleUpdateForm({
       url: '',
       topic: '',
       message: '',
       partition: 0,
       status: ProducerConst.form.status.idle
-    }));
+    });
   }
 
   openSaveForm(e){
     e.preventDefault();
-    this.props.dispatch(openSaveForm());
+    this.props.openSaveForm();
   }
 
   render(){
@@ -72,7 +72,8 @@ class Form extends Component{
     );
   }
 }
-export default connect((state) => {
+
+const mapStateToProps = (state) => {
   return {
     url: state.producerForm.url,
     topic: state.producerForm.topic,
@@ -80,4 +81,10 @@ export default connect((state) => {
     message: state.producerForm.message,
     status: state.producerForm.status
   }
-})(Form);
+}
+const mapDispatchToProps = {
+  handleSubmit: sendMessage,
+  handleUpdateForm: updateProducerForm,
+  openSaveForm
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

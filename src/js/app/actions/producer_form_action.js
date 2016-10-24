@@ -36,8 +36,7 @@ export function sendMessage(params){
     })
     .then((result) =>{
       producer.end();
-      if(typeof result[0].error == 'object'){
-        console.error(result[0].error);
+      if(result[0].error !== null && result[0].error !== undefined){
         return dispatch(finishSendMessage({result: 'failed', resultMessage: result[0].error.message}));
       } else{
         let successMessage = `success with topic ${result[0].topic} offset ${result[0].offset}`

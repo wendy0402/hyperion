@@ -6,8 +6,8 @@ export default class Result extends Component {
   render(){
     let labelClass = classNames({
       'message': true,
-      'is-success': (this.props.result === ProducerConst.form.status.success),
-      'is-danger':  (this.props.result !== ProducerConst.form.status.success)
+      'is-success': (this.props.result === ProducerConst.form.result.success),
+      'is-danger':  (this.props.result !== ProducerConst.form.result.success)
     })
     let messageHeader = this.props.result === 'success' ? "SUCCESS" : "FAILED"
     return(

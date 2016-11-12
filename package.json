@@ -1,5 +1,6 @@
 {
   "repository": {},
+  "name": "Hyperion",
   "license": "MIT",
   "scripts": {
     "deploy": "brunch build --production",

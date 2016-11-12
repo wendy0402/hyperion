@@ -37,16 +37,14 @@ export function sendMessage(params){
     .then((result) =>{
       producer.end();
       if(result[0].error !== null && result[0].error !== undefined){
-        return dispatch(finishSendMessage({result: 'failed', resultMessage: result[0].error.message}));
+        let sendingResult = {result: 'failed', resultMessage: result[0].error.message}
       } else{
         let successMessage = `success with topic ${result[0].topic} offset ${result[0].offset}`
-        return dispatch(finishSendMessage(
-          { result: 'success', resultMessage: successMessage }
-        ));
+        let sendingResult = { result: 'success', resultMessage: successMessage }
       }
+      return dispatch(finishSendMessage(sendingResult));
     })
     .catch((e) =>{
-
       producer.end();
       console.error(e);
       return dispatch(finishSendMessage({result: ProducerConst.form.result.failed, resultMessage: e.message}));
@@ -54,14 +52,14 @@ export function sendMessage(params){
   };
 }
 
-export function sendingMessageOnProgress(params){
+function sendingMessageOnProgress(params){
   return {
     type: SEND_MESSAGE,
     params
   }
 }
 
-export function finishSendMessage(params){ //success true or false
+function finishSendMessage(params){ //success true or false
   return {
     type: FINISH_SEND_MESSAGE,
     status: ProducerConst.form.status.sent,

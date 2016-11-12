@@ -7,15 +7,13 @@ class HistoryModel {
   }
 
   add(params={}, callback=()=>{} ){
-    var _conn = this.conn;
-    var _limit = this.limit
-    _conn.add(params)
+    this.conn.add(params)
     .then((id) => {
-      _conn.count().then((total) =>{
-        if(total > _limit){
-          let totalNeedToDestroyed = total - _limit;
+      this.conn.count().then((total) =>{
+        if(total > this.limit){
+          let totalNeedToDestroyed = total - this.limit;
           // @TODO cleaning up this
-          return _conn.orderBy(':id').limit(totalNeedToDestroyed).delete().then((totalDestroyed) => {
+          return this.conn.orderBy(':id').limit(totalNeedToDestroyed).delete().then((totalDestroyed) => {
               callback(id);
             });
         } else{

@@ -36,11 +36,12 @@ export function sendMessage(params){
     })
     .then((result) =>{
       producer.end();
+      let sendingResult;
       if(result[0].error !== null && result[0].error !== undefined){
-        let sendingResult = {result: 'failed', resultMessage: result[0].error.message}
+        sendingResult = {result: 'failed', resultMessage: result[0].error.message}
       } else{
         let successMessage = `success with topic ${result[0].topic} offset ${result[0].offset}`
-        let sendingResult = { result: 'success', resultMessage: successMessage }
+        sendingResult = { result: 'success', resultMessage: successMessage }
       }
       return dispatch(finishSendMessage(sendingResult));
     })

@@ -2,14 +2,14 @@ import { createStore, applyMiddleware } from 'redux';
 import ProducerReducer from '../reducers';
 import thunk from 'redux-thunk';
 
-const arthurStore = createStore(
+const hyperionStore = createStore(
   ProducerReducer,
   applyMiddleware(thunk)
 );
 
 
-arthurStore.subscribe(()=>{
-  console.log(arthurStore.getState());
+hyperionStore.subscribe(()=>{
+  console.log(hyperionStore.getState());
 });
 
-export default arthurStore
+export default hyperionStore

@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import { connect } from 'react-redux'
-import { ProducerConst } from '../constants/producer_const'
-
+import KafkaResult from '../components/producer/kafka_result'
 import Form from '../components/producer/form'
-import Result from '../components/producer/result'
 
 import SaveForm from '../components/producer/save_form'
 import SideMenuRouter from '../components/producer/side_menu_router'
@@ -49,15 +47,6 @@ class Producer extends Component{
 
     this.producerSaveFormAction.addTemplateToCollection(collectionID, templateParams)
   }
-  // container logic
-
-  renderResultMessage(){
-    if(this.props.producerForm.status === ProducerConst.form.status.sent){
-      return(
-        <Result result={this.props.producerForm.result} resultMessage={this.props.producerForm.resultMessage}/>
-      );
-    }
-  }
 
   render(){
     return(
@@ -70,7 +59,7 @@ class Producer extends Component{
             <p className="subtitle is-5">&nbsp;</p> {/* this is for title*/}
             <Form />
           </div>
-          {this.renderResultMessage()}
+          <KafkaResult />
         </div>
         <SaveForm
           createNewCollection={this.createCollectionSaveForm}
